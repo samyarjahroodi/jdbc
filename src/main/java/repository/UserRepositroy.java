@@ -5,6 +5,7 @@ import model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserRepositroy {
@@ -24,5 +25,24 @@ public class UserRepositroy {
         preparedStatement.setString(4, user.getPassword());
         int result = preparedStatement.executeUpdate();
         return result;
+    }
+
+    public User login(String username) throws SQLException {
+        String loginQuery = "SELECT * FROM users WHERE username = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(loginQuery);
+       preparedStatement.setString(1, username);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if(resultSet.next()) {
+            User user = new User(
+                    resultSet.getInt("id"),
+                    resultSet.getString("firstname"),
+                    resultSet.getString("lastname"),
+                    resultSet.getString("username"),
+                    resultSet.getString("password")
+            );
+            return user;
+        }
+        else
+            return null;
     }
 }
