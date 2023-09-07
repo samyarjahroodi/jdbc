@@ -4,6 +4,7 @@ import model.User;
 import repository.UserRepositroy;
 
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class UserService {
 
@@ -19,5 +20,19 @@ public class UserService {
             System.out.println(user.getFirstname() + " successfully added to database");
         else
             System.out.println("OOps! :(");
+    }
+
+    public void login() throws SQLException {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Please enter you username:");
+        String username = input.nextLine();
+        System.out.println("Please enter you password:");
+        String password = input.nextLine();
+
+        User user = userRepositroy.login(username);
+        if((user != null) && user.getPassword().equals(password))
+            System.out.println("login successfully");
+        else
+            System.out.println("Bad Credentials");
     }
 }
