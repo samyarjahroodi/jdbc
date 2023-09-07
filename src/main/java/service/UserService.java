@@ -14,8 +14,7 @@ public class UserService {
     public UserService() throws SQLException {
     }
 
-    public void register() throws SQLException {
-        User user = new User(null, "farzad", "afi", "farzadafi", "1111");
+    public void register(User user) throws SQLException {
         int result = userRepositroy.save(user);
         if(result != 0)
             System.out.println(user.getFirstname() + " successfully added to database");
@@ -23,31 +22,23 @@ public class UserService {
             System.out.println("OOps! :(");
     }
 
-    public void login() throws SQLException {
-        System.out.println("Please enter you username:");
-        String username = input.nextLine();
-        System.out.println("Please enter you password:");
-        String password = input.nextLine();
-
+    public User login(String username) throws SQLException {
         User user = userRepositroy.login(username);
-        if((user != null) && user.getPassword().equals(password))
-            System.out.println("login successfully");
-        else
-            System.out.println("Bad Credentials");
+        return user;
     }
 
-    public void changeFirstname() throws SQLException {
+    public void changeFirstname(int id) throws SQLException {
         System.out.println("Please enter your new firstname:");
         String firstname = input.nextLine();
-        int result = userRepositroy.updateFirstname(firstname);
+        int result = userRepositroy.updateFirstname(firstname, id);
         if(result != 0)
             System.out.println("successfully edited to database");
         else
             System.out.println("OOps! :(");
     }
 
-    public void delete() throws SQLException {
-        int result = userRepositroy.delete(2);
+    public void delete(int id) throws SQLException {
+        int result = userRepositroy.delete(id);
         if(result != 0)
             System.out.println("successfully deleted from database");
         else
