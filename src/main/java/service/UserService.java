@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class UserService {
 
     private final UserRepositroy userRepositroy = new UserRepositroy();
+    Scanner input = new Scanner(System.in);
 
     public UserService() throws SQLException {
     }
@@ -23,7 +24,6 @@ public class UserService {
     }
 
     public void login() throws SQLException {
-        Scanner input = new Scanner(System.in);
         System.out.println("Please enter you username:");
         String username = input.nextLine();
         System.out.println("Please enter you password:");
@@ -34,5 +34,15 @@ public class UserService {
             System.out.println("login successfully");
         else
             System.out.println("Bad Credentials");
+    }
+
+    public void changeFirstname() throws SQLException {
+        System.out.println("Please enter your new firstname:");
+        String firstname = input.nextLine();
+        int result = userRepositroy.updateFirstname(firstname);
+        if(result != 0)
+            System.out.println("successfully edited to database");
+        else
+            System.out.println("OOps! :(");
     }
 }
