@@ -46,10 +46,11 @@ public class UserRepositroy {
             return null;
     }
 
-    public int updateFirstname(String firstname) throws SQLException {
-        String query = "UPDATE users SET firstname = ? WHERE id = 2";
+    public int updateFirstname(String firstname, int id) throws SQLException {
+        String query = "UPDATE users SET firstname = ? WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, firstname);
+        preparedStatement.setInt(2, id);
         int result = preparedStatement.executeUpdate();
         return result;
     }
